@@ -194,6 +194,13 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
   option domain-search "{{ subnet.domain_search|join('", "') }}";
 {% endif %}
 {% endif %}
+{% if subnet.tftp_server_name is defined %}
+{% if subnet.tftp_server_name is string %}
+  option tftp-server-name "{{ subnet.tftp_server_name }}";
+{% else %}
+  option tftp-server-name {{ subnet.tftp_server_name|join('", "') }};
+{% endif %}
+{% endif %}
 {% if subnet.domain_name_servers is defined %}
 {% if subnet.domain_name_servers is string %}
   option domain-name-servers {{ subnet.domain_name_servers }};
