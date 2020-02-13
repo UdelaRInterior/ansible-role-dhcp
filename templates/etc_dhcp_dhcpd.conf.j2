@@ -295,6 +295,13 @@ host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }}
 {% if host.ip is defined %}
   fixed-address {{ host.ip }};
 {% endif %}
+{% if host.tftp_server_name is defined %}
+{% if host.tftp_server_name is string %}
+  option tftp-server-name "{{ host.tftp_server_name }}";
+{% else %}
+  option tftp-server-name {{ host.tftp_server_name|join('", "') }};
+{% endif %}
+{% endif %}
 }
 {% endfor %}
 {% endif %}
